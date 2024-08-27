@@ -1,14 +1,27 @@
+from contextlib import asynccontextmanager
+
 import uvicorn
-from api import router as main_router
-from core.config import settings
 from fastapi import FastAPI
 
-app = FastAPI(title=settings.app_name)
-app.include_router(main_router, prefix="/api")
+from api import router as main_router
+from core.config import settings
+from core import db_manager
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # start app
+    yield
+    # shutdown
+    await db_manager.dispose()
+
+
+main_app = FastAPI(title=settings.app_name, lifespan=lifespan)
+main_app.include_router(main_router, prefix="/api")
 
 if __name__ == "__main__":
     uvicorn.run(
-        "main:app",
+        "main:main_app",
         host=settings.socket.host,
         port=settings.socket.port,
         reload=True,
