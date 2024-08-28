@@ -1,4 +1,4 @@
-__all__ = ["db_manager", "Base"]
+__all__ = ["db_manager"]
 
-from .base import Base
-from .db_manager import db_manager
+
+from .db import db_manager
