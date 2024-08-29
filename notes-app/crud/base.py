@@ -1,6 +1,7 @@
 from typing import Generic, Type, TypeVar
 
 from pydantic import BaseModel
+from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from core.db import Base
@@ -27,3 +28,12 @@ class CRUDManager(Generic[ModelType, CreateSchemaType]):
         await session.commit()
         await session.refresh(db_obj)
         return db_obj
+
+    async def get_all(
+        self,
+        session: AsyncSession,
+        user: User,
+    ) -> list[ModelType]:
+        return await session.scalars(
+            select(self.model).where(self.model.user_id == user.id),
+        )
