@@ -8,5 +8,6 @@ from core.db import Base
 if TYPE_CHECKING:
     from .note import Note
 
+
 class User(SQLAlchemyBaseUserTable[int], Base):
-    notes: Mapped[list['Note']] = relationship(back_populates='user')
+    notes: Mapped[list["Note"]] = relationship(back_populates="user")

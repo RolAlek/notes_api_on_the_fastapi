@@ -1,4 +1,4 @@
-from typing import Any, AsyncGenerator, Generator, Optional, Union
+from typing import Any, AsyncGenerator
 
 from fastapi import Depends, Request
 from fastapi_users import (
@@ -13,9 +13,10 @@ from fastapi_users.authentication import (
     JWTStrategy,
 )
 from fastapi_users_db_sqlalchemy import SQLAlchemyUserDatabase
+from sqlalchemy.ext.asyncio import AsyncSession
+
 from models import User
 from schemas import UserCreate
-from sqlalchemy.ext.asyncio import AsyncSession
 
 from . import db_manager
 from .config import settings
@@ -23,7 +24,7 @@ from .config import settings
 
 async def get_user_db(
     session: AsyncSession = Depends(db_manager.get_session),
-) -> AsyncGenerator[SQLAlchemyUserDatabase[User, Any], Any, None]:
+) -> AsyncGenerator[SQLAlchemyUserDatabase[User, Any], None]:
     yield SQLAlchemyUserDatabase(session, User)
 
 
@@ -66,7 +67,7 @@ class UserManager(IntegerIDMixin, BaseUserManager[User, int]):
 
 async def get_user_manager(
     user_db=Depends(get_user_db),
-) -> AsyncGenerator[UserManager, Any, None]:
+) -> AsyncGenerator[UserManager, None]:
     yield UserManager(user_db)
 
 

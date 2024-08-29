@@ -1,9 +1,10 @@
 from http import HTTPStatus
 
 from fastapi import HTTPException
-from models import Note, User
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
+
+from models import Note, User
 
 
 async def check_unique_note_name_for_user(
@@ -15,7 +16,7 @@ async def check_unique_note_name_for_user(
         select(Note).where(
             Note.user_id == user.id,
             Note.name == note_name,
-        )
+        ),
     )
     if user_note is not None:
         raise HTTPException(

@@ -22,8 +22,8 @@ class Settings(BaseSettings):
         case_sensitive=False,
         env_nested_delimiter="__",
         env_prefix="APP__",
-        env_file='../.env',
-        extra='allow',
+        env_file="../.env",
+        extra="allow",
     )
     app_name: str
     secret: str
