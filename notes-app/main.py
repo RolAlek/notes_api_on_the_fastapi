@@ -24,5 +24,5 @@ if __name__ == "__main__":
         "main:main_app",
         host=settings.socket.host,
         port=settings.socket.port,
-        reload=True,
+        reload=settings.socket.reload,
     )

@@ -5,8 +5,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 class SocketConfig(BaseModel):
     host: str = "0.0.0.0"
     port: int = 8000
-    pool_size: int = 30
-    max_overflow: int = 10
+    reload: bool = True
 
 
 class DBConfig(BaseModel):
