@@ -1,5 +1,5 @@
-__all__ = ["current_user", "db_manager"]
+__all__ = ["db_manager", "check_spelling"]
 
 
 from .db import db_manager
-from .user import current_user
+from .utils import check_spelling

@@ -17,6 +17,10 @@ class DBConfig(BaseModel):
     max_overflow: int = 10
 
 
+class SpellConfig(BaseModel):
+    url: str
+
+
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(
         case_sensitive=False,
@@ -29,6 +33,7 @@ class Settings(BaseSettings):
     secret: str
     socket: SocketConfig = SocketConfig()
     db: DBConfig
+    spell: SpellConfig
 
 
 settings = Settings()
